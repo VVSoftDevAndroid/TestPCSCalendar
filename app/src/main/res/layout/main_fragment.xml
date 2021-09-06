@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.vvsoftdev.testpcsoftcalendar.viewmodel.MainViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.vvsoftdev.testpcsoftcalendar.adapter.CalendarGridAdapter" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:setGestureListener="@{viewmodel}"
+        tools:context=".MainActivity">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:gone="@{!viewmodel.isListLoading}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="4dp"
+            android:overScrollMode="never"
+            app:setGestureListener="@{viewmodel}"
+            app:adapter="@{adapter}"
+            app:dayList="@{viewmodel.daysListLiveData}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/monthTv"
+            app:setLayoutManager="@{7}"
+            app:toast="@{viewmodel.toastLiveData}" />
+
+        <TextView
+            android:id="@+id/yearTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="@dimen/yearTextSize"
+            android:text="@{viewmodel.monthYearLiveData.component2()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/monthTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/monthTextSize"
+            android:text="@{viewmodel.monthYearLiveData.component1()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/yearTv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
